@@ -1,0 +1,24 @@
+apply plugin: "java-platform"
+apply plugin: "maven-publish"
+
+javaPlatform {
+  allowDependencies()
+}
+
+publishing {
+  publications {
+    nebula(MavenPublication) {
+      from components.javaPlatform
+    }
+  }
+}
+
+dependencies {
+  api(platform(project(":spinnaker-dependencies")))
+  constraints {
+    rootProject
+      .subprojects
+      .findAll { it.name.startsWith("kork-") && it != project }
+      .each { api(project(it.path)) }
+  }
+}

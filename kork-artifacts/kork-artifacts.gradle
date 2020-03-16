@@ -1,0 +1,15 @@
+apply plugin: "java-library"
+apply plugin: "groovy"
+apply from: "$rootDir/gradle/lombok.gradle"
+
+dependencies {
+  api(platform(project(":spinnaker-dependencies")))
+
+  implementation "com.fasterxml.jackson.core:jackson-databind"
+  api "com.hubspot.jinjava:jinjava"
+
+  testImplementation "org.codehaus.groovy:groovy-all"
+  testImplementation "org.spockframework:spock-core"
+  testRuntimeOnly "cglib:cglib-nodep"
+  testRuntimeOnly "org.objenesis:objenesis"
+}
