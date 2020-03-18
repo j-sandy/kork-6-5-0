@@ -25,7 +25,7 @@ ext {
     groovy         : "2.5.7", //this needs to keep in sync with the version from boot... if we could get rid of groovy-all we'd no longer need this
     hystrix        : "1.4.21",
     jsch           : "0.0.9",
-    okhttp         : "2.7.5",
+    //okhttp         : "2.7.5",
     okhttp3        : "3.14.2",
     resilience4j   : "1.0.0",
     retrofit       : "1.9.0",
@@ -98,10 +98,10 @@ dependencies {
     api("com.squareup.okhttp3:okhttp-sse:${versions.okhttp3}")
     api("com.squareup.okhttp3:okhttp-urlconnection:${versions.okhttp3}")
     api("com.squareup.okhttp3:okhttp:${versions.okhttp3}")
-    api("com.squareup.okhttp:mockwebserver:${versions.okhttp}")
-    api("com.squareup.okhttp:okhttp-apache:${versions.okhttp}")
-    api("com.squareup.okhttp:okhttp-urlconnection:${versions.okhttp}")
-    api("com.squareup.okhttp:okhttp:${versions.okhttp}")
+    //api("com.squareup.okhttp:mockwebserver:${versions.okhttp}")
+    //api("com.squareup.okhttp:okhttp-apache:${versions.okhttp}")
+    //api("com.squareup.okhttp:okhttp-urlconnection:${versions.okhttp}")
+    //api("com.squareup.okhttp:okhttp:${versions.okhttp}")
     api("com.squareup.retrofit2:converter-jackson:${versions.retrofit2}")
     api("com.squareup.retrofit2:retrofit-mock:${versions.retrofit2}")
     api("com.squareup.retrofit2:retrofit:${versions.retrofit2}")

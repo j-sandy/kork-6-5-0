@@ -2,9 +2,6 @@ package com.netflix.spinnaker.okhttp;
 
 import com.netflix.spectator.api.Registry;
 import com.netflix.spinnaker.security.AuthenticatedRequest;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -74,7 +74,7 @@ class MetricsInterceptor {
 
       if (chain != null) {
         method = request.method();
-        url = request.url();
+        url = request.url().url();
         response = chain.proceed(request);
         statusCode = ((Response) response).code();
       } else {

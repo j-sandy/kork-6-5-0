@@ -18,9 +18,12 @@ package com.netflix.spinnaker.config
 
 import com.netflix.spinnaker.okhttp.OkHttpClientConfigurationProperties
 import com.netflix.spinnaker.okhttp.OkHttpMetricsInterceptor
-import com.squareup.okhttp.ConnectionPool
-import com.squareup.okhttp.ConnectionSpec
-import com.squareup.okhttp.OkHttpClient
+//import com.squareup.okhttp.ConnectionPool
+//import com.squareup.okhttp.ConnectionSpec
+//import com.squareup.okhttp.OkHttpClient
+import okhttp3.ConnectionPool
+import okhttp3.ConnectionSpec
+import okhttp3.OkHttpClient
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
@@ -60,14 +63,21 @@ class OkHttpClientConfiguration {
    */
   OkHttpClient create() {
 
-    def okHttpClient = new OkHttpClient()
-    okHttpClient.setConnectTimeout(okHttpClientConfigurationProperties.connectTimeoutMs, TimeUnit.MILLISECONDS)
-    okHttpClient.setReadTimeout(okHttpClientConfigurationProperties.readTimeoutMs, TimeUnit.MILLISECONDS)
-    okHttpClient.setRetryOnConnectionFailure(okHttpClientConfigurationProperties.retryOnConnectionFailure)
-    okHttpClient.interceptors().add(okHttpMetricsInterceptor)
-    okHttpClient.connectionPool = new ConnectionPool(
-      okHttpClientConfigurationProperties.connectionPool.maxIdleConnections,
-      okHttpClientConfigurationProperties.connectionPool.keepAliveDurationMs)
+    def okHttpClient = new OkHttpClient().newBuilder()
+        .connectTimeout(okHttpClientConfigurationProperties.connectTimeoutMs, TimeUnit.MILLISECONDS)
+        .readTimeout(okHttpClientConfigurationProperties.readTimeoutMs, TimeUnit.MILLISECONDS)
+        .retryOnConnectionFailure(okHttpClientConfigurationProperties.retryOnConnectionFailure)
+        .addInterceptor(okHttpMetricsInterceptor)
+        .connectionPool(new ConnectionPool(okHttpClientConfigurationProperties.connectionPool.maxIdleConnections,
+      okHttpClientConfigurationProperties.connectionPool.keepAliveDurationMs,TimeUnit.MILLISECONDS))
+        .build()
+    //okHttpClient.setConnectTimeout(okHttpClientConfigurationProperties.connectTimeoutMs, TimeUnit.MILLISECONDS)
+    //okHttpClient.setReadTimeout(okHttpClientConfigurationProperties.readTimeoutMs, TimeUnit.MILLISECONDS)
+    //okHttpClient.setRetryOnConnectionFailure(okHttpClientConfigurationProperties.retryOnConnectionFailure)
+    //okHttpClient.interceptors().add(okHttpMetricsInterceptor)
+    //okHttpClient.connectionPool = new ConnectionPool(
+      //okHttpClientConfigurationProperties.connectionPool.maxIdleConnections,
+      //okHttpClientConfigurationProperties.connectionPool.keepAliveDurationMs)
 
     if (!okHttpClientConfigurationProperties.keyStore && !okHttpClientConfigurationProperties.trustStore) {
       return okHttpClient
@@ -97,7 +107,10 @@ class OkHttpClientConfiguration {
     }
 
     sslContext.init(keyManagerFactory.keyManagers, trustManagerFactory.trustManagers, secureRandom)
-    okHttpClient.setSslSocketFactory(sslContext.socketFactory)
+    //okHttpClient.setSslSocketFactory(sslContext.socketFactory)
+    okHttpClient = okHttpClient.newBuilder()
+        .sslSocketFactory(sslContext.socketFactory)
+        .build()
 
     return applyConnectionSpecs(okHttpClient)
   }
@@ -112,6 +125,9 @@ class OkHttpClientConfiguration {
       .tlsVersions(tlsVersions)
       .build()
 
-    return okHttpClient.setConnectionSpecs([connectionSpec, ConnectionSpec.CLEARTEXT] as List<ConnectionSpec>)
+    //return okHttpClient.setConnectionSpecs([connectionSpec, ConnectionSpec.CLEARTEXT] as List<ConnectionSpec>)
+    return okHttpClient.newBuilder()
+      .connectionSpecs([connectionSpec, ConnectionSpec.CLEARTEXT] as List<ConnectionSpec>)
+      .build()
   }
 }

@@ -18,7 +18,7 @@ dependencies {
   }
   api "com.fasterxml.jackson.core:jackson-annotations"
   api "com.hubspot.jinjava:jinjava"
-  api "com.squareup.okhttp:okhttp"
+  //api "com.squareup.okhttp:okhttp"
   api "com.squareup.okhttp3:okhttp"
   api "com.squareup.retrofit:retrofit"
   api "com.github.ben-manes.caffeine:guava"

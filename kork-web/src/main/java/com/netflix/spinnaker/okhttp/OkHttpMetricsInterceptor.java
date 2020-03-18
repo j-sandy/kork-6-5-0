@@ -17,12 +17,12 @@
 package com.netflix.spinnaker.okhttp;
 
 import com.netflix.spectator.api.Registry;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.Response;
 import java.io.IOException;
+import okhttp3.Interceptor;
+import okhttp3.Response;
 
-public class OkHttpMetricsInterceptor extends MetricsInterceptor
-    implements com.squareup.okhttp.Interceptor {
+public class OkHttpMetricsInterceptor extends MetricsInterceptor implements okhttp3.Interceptor {
+  // implements com.squareup.okhttp.Interceptor {
   public OkHttpMetricsInterceptor(Registry registry, boolean skipHeaderCheck) {
     super(registry, skipHeaderCheck);
   }
