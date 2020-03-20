@@ -21,7 +21,7 @@ publishing {
 ext {
   versions = [
     aws            : "1.11.656",
-    bouncycastle   : "1.61",
+    bouncycastle   : "1.64",
     groovy         : "2.5.7", //this needs to keep in sync with the version from boot... if we could get rid of groovy-all we'd no longer need this
     hystrix        : "1.4.21",
     jsch           : "0.0.9",
@@ -72,6 +72,7 @@ dependencies {
     api("com.google.code.findbugs:jsr305:3.0.2")
     api("com.google.guava:guava:28.0-jre")
     api("com.hubspot.jinjava:jinjava:2.2.3") // DO NOT CHANGE: MPTv1 strongly depends on this version of Jinjava
+    api("org.javassist:javassist:3.19.0-GA")
     api("com.jcraft:jsch.agentproxy.connector-factory:${versions.jsch}")
     api("com.jcraft:jsch.agentproxy.jsch:${versions.jsch}")
     api("com.natpryce:hamkrest:1.4.2.2")
@@ -137,6 +138,7 @@ dependencies {
     api("org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.5.RELEASE")
     api("org.springframework.security.extensions:spring-security-saml-dsl-core:1.0.5.RELEASE")
     api("org.springframework.security.extensions:spring-security-saml2-core:1.0.9.RELEASE")
+    api("org.springframework.boot:spring-boot-starter-tomcat:2.2.5.RELEASE")
     api("org.threeten:threeten-extra:1.0")
   }
 }
